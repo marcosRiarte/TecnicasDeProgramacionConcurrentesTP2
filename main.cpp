@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
             }
 
         return 0;
-    } else { 
+    } else {
              // cliente
              Cliente cliente("/bin/cat", 'a');
              for (int i = 0; i < NROPROCESSREQUEST; i++) {

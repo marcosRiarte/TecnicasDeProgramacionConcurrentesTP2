@@ -1,4 +1,6 @@
+/*Clase servidor */
 #include "Servidor.h"
+
 
 Servidor :: Servidor ( const std::string& archivo,const char letra ) {
 	this->cola = new Cola<mensaje> ( archivo,letra );
