@@ -21,12 +21,13 @@ int main(int argc, char* argv[]) {
             //Creo servidor
 
             Servidor servidor("/bin/cat", 'a');
+            std::cout << "\n Se creo el proceso servidor con ProcessId : " << getpid() <<std::endl;
             for (int i = 0; i < NROPROCESSREQUEST; i++) {
-                std::cout << " Servidor : esperando peticiones " << std::endl;
+                std::cout << "\n Servidor : esperando peticiones " << std::endl;
                 //Lee de la cola
                 servidor.recibirPeticion();
-                std::cout << "ñap" << std::endl;
-                std::cout << " Servidor : peticion recibida : " << servidor.getPeticionRecibida().estadoDeTransaccion
+
+                std::cout << "\n Servidor : peticion recibida : " << servidor.getPeticionRecibida().estadoDeTransaccion
                           << std::endl;
 
                 servidor.procesarPeticion();

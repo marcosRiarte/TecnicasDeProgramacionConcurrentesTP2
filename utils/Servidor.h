@@ -4,6 +4,7 @@
 #include <string>
 #include <string.h>
 #include <sstream>
+#include <fstream>
 
 #include "Mensajes.h"
 #include "Cola.h"
@@ -14,12 +15,14 @@ class Servidor {
 		Cola<mensaje>* cola;
 		mensaje peticionRecibida;
 		mensaje respuesta;
+        std::ofstream my_fileOut;
 
 	public:
 		Servidor ( const std::string& archivo,const char letra );
 		~Servidor ();
 
-		int recibirPeticion ();
+        void crearArchivoAlmacenamiento (std::string fileName);
+        int recibirPeticion ();
 		int procesarPeticion ();
 		int responderPeticion () const;
 
