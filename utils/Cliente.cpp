@@ -18,9 +18,29 @@ mensaje Cliente :: enviarPeticion ( const int id,const std::string& texto ) cons
 	//Todo  for me : refactoriza resolviendo problema mesaje
     //Copia el texto en la transaccion(mensaje)
 	strcpy ( peticion.estadoDeTransaccion,texto.c_str() );
-    //Escribe en cola
+    //Escribe en cola y luego lee
 	this->cola->escribir ( peticion );
 	this->cola->leer ( RESPUESTA,&respuesta );
 
 	return respuesta;
+}
+
+mensaje Cliente::enviarAlta (const int id,const std::string& nombre,const std::string& direccion,const std::string& telefono ) const {
+		mensaje alta;
+		mensaje respuesta;
+
+		alta.mtype = PETICION;
+		alta.id = id;
+
+        const std::string texto =" Peticion " + std::to_string(id) + " del cliente ";
+		//Copia el texto en la transaccion(mensaje)
+        strcpy (alta.estadoDeTransaccion,texto.c_str());
+		strcpy ( alta.nombre,nombre.c_str() );
+	    strcpy ( alta.direccion,direccion.c_str() );
+	    strcpy ( alta.telefono,telefono.c_str() );
+		//Escribe en cola
+		this->cola->escribir ( alta );
+		this->cola->leer ( RESPUESTA,&respuesta );
+
+		return respuesta;
 }

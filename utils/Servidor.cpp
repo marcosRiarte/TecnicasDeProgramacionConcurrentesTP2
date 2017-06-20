@@ -15,11 +15,11 @@ void Servidor::crearArchivoAlmacenamiento (std::string fileName) {
 Servidor :: ~Servidor () {
 	delete this->cola;
 }
-
+//LEE COLA
 int Servidor :: recibirPeticion () {
 	this->peticionRecibida.id = 0;
 	this->cola->leer ( PETICION,&(this->peticionRecibida) );
-    //TODO PROBANDO LA TRANSACCION
+    //TODO PROBANDO LA TRANSACCION //POSIBLE LOCK
     this->my_fileOut << this->peticionRecibida.id << std::endl;
     this->my_fileOut << this->peticionRecibida.nombre << std::endl;
     this->my_fileOut << this->peticionRecibida.direccion << std::endl;
