@@ -5,6 +5,7 @@
 Servidor :: Servidor ( const std::string& archivo,const char letra ) {
 	this->cola = new Cola<mensaje> ( archivo,letra );
 	this->crearArchivoAlmacenamiento("almacenamiento.txt");
+	utils::SignalHandler::getInstance()->registrarHandler(ExitHandler::SIG_EXIT, &this->m_exitHandler);
 }
 
 //Crea archivo de almacenamiento
@@ -15,7 +16,11 @@ void Servidor::crearArchivoAlmacenamiento (std::string fileName) {
 Servidor :: ~Servidor () {
 	this->cola->destruir ();
 	delete this->cola;
+
+	utils::SignalHandler::getInstance()->removerHandler(ExitHandler::SIG_EXIT);
+	utils::SignalHandler::destruir();
 }
+
 //LEE COLA
 int Servidor :: recibirPeticion () {
 	this->peticionRecibida.id = 0;

@@ -8,6 +8,9 @@
 
 #include "Mensajes.h"
 #include "Cola.h"
+#include "ExitHandler.h"
+#include "SignalHandler.h"
+
 
 class Servidor {
 
@@ -16,6 +19,9 @@ class Servidor {
 		mensaje peticionRecibida;
 		mensaje respuesta;
 		std::ofstream my_fileOut;
+
+		utils::ExitHandler m_exitHandler;
+
 
 	public:
 		Servidor ( const std::string& archivo,const char letra );
