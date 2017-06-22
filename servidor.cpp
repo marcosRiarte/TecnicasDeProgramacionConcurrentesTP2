@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
 	// Creo servidor
 	Servidor servidor("/bin/cat", 'a');
 
+
 	// Controla cuando llega la señal para salir
 	utils::ExitHandler exitHandler;
 	utils::SignalHandler* sigHandler = utils::SignalHandler::getInstance();

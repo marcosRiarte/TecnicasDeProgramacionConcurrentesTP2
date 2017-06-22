@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 		std::cin >> op;
 
 		if (op == 'A') {
-			std::cout << "\nIngrese datos de una nueva persnona: " << std::endl;
+			std::cout << "\nIngrese datos de una nueva persona: " << std::endl;
 			std::cout << "Nombre: ";
 			std::cin >> nombre;
 
