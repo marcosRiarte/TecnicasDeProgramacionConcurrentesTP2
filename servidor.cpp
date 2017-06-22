@@ -25,9 +25,6 @@ int main(int argc, char* argv[]) {
 		servidor.recibirPeticion();
 		std::cout << "recibido" << std::endl;
 
-		// Prepara la respuesta
-		servidor.procesarPeticion();
-
 		// Escribre la respuesta en el mensaje
 		std::cout << "Enviando ACK... ";
 		servidor.responderPeticion();
