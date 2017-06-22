@@ -8,6 +8,8 @@ Cliente :: ~Cliente() {
 	this->cola->destruir ();
 	delete this->cola;
 }
+
+
 //Recibe el id de la cola y el mensaje a enviar
 mensaje Cliente :: enviarPeticion ( const int id,const std::string& texto ) const {
 	mensaje peticion;
@@ -26,21 +28,22 @@ mensaje Cliente :: enviarPeticion ( const int id,const std::string& texto ) cons
 }
 
 mensaje Cliente::enviarAlta (const int id,const std::string& nombre,const std::string& direccion,const std::string& telefono ) const {
-		mensaje alta;
-		mensaje respuesta;
+	mensaje alta;
+	alta.mtype = PETICION;
+	alta.id = id;
 
-		alta.mtype = PETICION;
-		alta.id = id;
+	//Copia el texto en la transaccion(mensaje)
+	const std::string texto =" Peticion " + std::to_string(id) + " del cliente ";
+	strcpy(alta.estadoDeTransaccion, texto.c_str());
+	strcpy(alta.nombre, nombre.c_str() );
+	strcpy(alta.direccion, direccion.c_str() );
+	strcpy(alta.telefono, telefono.c_str() );
 
-        const std::string texto =" Peticion " + std::to_string(id) + " del cliente ";
-		//Copia el texto en la transaccion(mensaje)
-        strcpy (alta.estadoDeTransaccion,texto.c_str());
-		strcpy ( alta.nombre,nombre.c_str() );
-	    strcpy ( alta.direccion,direccion.c_str() );
-	    strcpy ( alta.telefono,telefono.c_str() );
-		//Escribe en cola
-		this->cola->escribir ( alta );
-		this->cola->leer ( RESPUESTA,&respuesta );
+	//Escribe en cola
+	this->cola->escribir ( alta );
 
-		return respuesta;
+	mensaje respuesta;
+	this->cola->leer ( RESPUESTA,&respuesta );
+
+	return respuesta;
 }
