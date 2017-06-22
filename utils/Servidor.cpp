@@ -4,7 +4,7 @@
 
 Servidor :: Servidor ( const std::string& archivo,const char letra ) {
 	this->cola = new Cola<mensaje> ( archivo,letra );
-    this->crearArchivoAlmacenamiento("almacenamiento.txt");
+	this->crearArchivoAlmacenamiento("almacenamiento.txt");
 }
 
 //Crea archivo de almacenamiento
@@ -13,17 +13,19 @@ void Servidor::crearArchivoAlmacenamiento (std::string fileName) {
 }
 
 Servidor :: ~Servidor () {
+	this->cola->destruir ();
 	delete this->cola;
 }
 //LEE COLA
 int Servidor :: recibirPeticion () {
 	this->peticionRecibida.id = 0;
 	this->cola->leer ( PETICION,&(this->peticionRecibida) );
-    //TODO PROBANDO LA TRANSACCION //POSIBLE LOCK
-    this->my_fileOut << this->peticionRecibida.id << std::endl;
-    this->my_fileOut << this->peticionRecibida.nombre << std::endl;
-    this->my_fileOut << this->peticionRecibida.direccion << std::endl;
-    this->my_fileOut << this->peticionRecibida.telefono << std::endl;
+
+	//TODO PROBANDO LA TRANSACCION //POSIBLE LOCK
+	this->my_fileOut << this->peticionRecibida.id << std::endl;
+	this->my_fileOut << this->peticionRecibida.nombre << std::endl;
+	this->my_fileOut << this->peticionRecibida.direccion << std::endl;
+	this->my_fileOut << this->peticionRecibida.telefono << std::endl;
 
 	return 0;
 }

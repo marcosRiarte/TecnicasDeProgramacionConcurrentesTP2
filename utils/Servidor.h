@@ -15,14 +15,14 @@ class Servidor {
 		Cola<mensaje>* cola;
 		mensaje peticionRecibida;
 		mensaje respuesta;
-        std::ofstream my_fileOut;
+		std::ofstream my_fileOut;
 
 	public:
 		Servidor ( const std::string& archivo,const char letra );
 		~Servidor ();
 
-        void crearArchivoAlmacenamiento (std::string fileName);
-        int recibirPeticion ();
+		void crearArchivoAlmacenamiento (std::string fileName);
+		int recibirPeticion ();
 		int procesarPeticion ();
 		int responderPeticion () const;
 
