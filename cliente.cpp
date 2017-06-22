@@ -21,27 +21,25 @@ int main(int argc, char* argv[]) {
 		std::cout << "Q - Salir" << std::endl;
 		std::cout << std::endl;
 
-
-		int id;
 		char nombre[61];char direccion [120];char telefono [13];
 		char op;
 		std::cout << "Seleccione la operación: ";
 		std::cin >> op;
 
 		if (op == 'A') {
-			std::cout << "Se envia un alta al servidor" << std::endl;
-			std::cout << "Ingrese registro nuevo de la tabla persnona" << std::endl;
-			std::cout << "ID : ";
-			std::cin >> id;
-			std::cout << "nombre : ";
+			std::cout << "\nIngrese datos de una nueva persnona: " << std::endl;
+			std::cout << "Nombre: ";
 			std::cin >> nombre;
-			std::cout << "direccion : ";
+
+			std::cout << "Direccion: ";
 			std::cin >> direccion;
-			std::cout << "telefono : ";
+
+			std::cout << "Telefono: ";
 			std::cin >> telefono;
 
-			mensaje alta = cliente.enviarAlta(id,nombre,direccion, telefono);
+			mensaje alta = cliente.enviarAlta(0, nombre, direccion, telefono);
 			std::cout << "Respuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
+			std::cout << "\n\n" << std::endl;
 
 		} else if (op == 'B' || op == 'C') {
 			std::cout << "Work in progress" << std::endl;
