@@ -13,7 +13,7 @@ namespace utils {
 			bool exitRecibido;
 			
 			
-			ExitHandler() : exitRecivido(false) { }
+			ExitHandler() : exitRecibido(false) { }
 
 
 			virtual int handleSignal(int signum) {

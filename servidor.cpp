@@ -16,8 +16,8 @@ int main(int argc, char* argv[]) {
 
 	// Controla cuando llega la señal para salir
 	utils::ExitHandler exitHandler;
-	utils::SignalHandler sigHandler = utils::SignalHandler::getInstance();
-	sigHandler.registrarHandler(utils::ExitHandler::SIG_EXIT, exitHandler);
+	utils::SignalHandler* sigHandler = utils::SignalHandler::getInstance();
+	sigHandler->registrarHandler(utils::ExitHandler::SIG_EXIT, &exitHandler);
 
 	while (!exitHandler.exitRecibido) {
 		// Lee de la cola y queda a la espera de que haya datos.
@@ -34,9 +34,10 @@ int main(int argc, char* argv[]) {
 		std::cout << "enviado." << std::endl;
 	}
 
-	// Destriye el manejador de señales
-	sigHandler.removerHandler(utils::ExitHandler::SIG_EXIT);
+	// Destruye el manejador de señales
+	sigHandler->removerHandler(utils::ExitHandler::SIG_EXIT);
 	utils::SignalHandler::destruir();
+	sigHandler = nullptr;
 
         std::cout << "== Servidor apagado  ==" << std::endl;
 
