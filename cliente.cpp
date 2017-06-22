@@ -16,7 +16,6 @@ int main(int argc, char* argv[]) {
 
 	while (keepGoing) {
 		std::cout << "A - Alta" << std::endl;
-//		std::cout << "B - Baja (WIP)" << std::endl;
 		std::cout << "C - Consulta" << std::endl;
 		std::cout << "Q - Salir" << std::endl;
 		std::cout << std::endl;
@@ -43,10 +42,6 @@ int main(int argc, char* argv[]) {
 			mensaje alta = cliente.enviarAlta(nombre, direccion, telefono);
 			std::cout << "\nRespuesta recibida: " << alta.estadoDeTransaccion << std::endl;
 			std::cout << "\n--------\n" << std::endl;
-
-//		} else if (op == 'B') {
-//			std::cout << "Work in progress" << std::endl;
-//			std::cout << "\n--------\n" << std::endl;
 
 		} else if (op == 'C') {
 			std::cout << "\nIngrese el id de la persona a consultar: " << std::endl;

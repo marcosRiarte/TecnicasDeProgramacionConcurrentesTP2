@@ -7,6 +7,8 @@ set ( SRCS
 	Cola.h
 	Servidor.cpp
 	SignalHandler.cpp
+	EventHandler.h
+	ExitHandler.h
     )
 
 #Compila la libreria
