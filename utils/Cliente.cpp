@@ -1,5 +1,6 @@
 #include "Cliente.h"
 
+
 Cliente :: Cliente ( const std::string& archivo,const char letra ) {
 	this->cola = new Cola<mensaje> ( archivo,letra );
 }
@@ -10,30 +11,26 @@ Cliente :: ~Cliente() {
 
 
 //Recibe el id de la cola y el mensaje a enviar
-mensaje Cliente :: enviarPeticion ( const int id,const std::string& texto ) const {
+mensaje Cliente :: enviarPeticion(const int id) {
 	mensaje peticion;
-	mensaje respuesta;
-
 	peticion.mtype = PETICION;
 	peticion.id = id;
-	//Todo  for me : refactoriza resolviendo problema mesaje
-    //Copia el texto en la transaccion(mensaje)
-	strcpy ( peticion.estadoDeTransaccion,texto.c_str() );
-    //Escribe en cola y luego lee
+
 	this->cola->escribir ( peticion );
-	this->cola->leer ( RESPUESTA,&respuesta );
+
+	mensaje respuesta;
+	this->cola->leer ( &respuesta );
 
 	return respuesta;
 }
 
-mensaje Cliente::enviarAlta (const int id,const std::string& nombre,const std::string& direccion,const std::string& telefono ) const {
+mensaje Cliente::enviarAlta(std::string nombre, std::string direccion, std::string telefono ) {
 	mensaje alta;
 	alta.mtype = ALTA;
-	alta.id = id;
+	alta.id = 0;
 
 	//Copia el texto en la transaccion(mensaje)
-	const std::string texto =" Peticion " + std::to_string(id) + " del cliente ";
-	strcpy(alta.estadoDeTransaccion, texto.c_str());
+	strcpy(alta.estadoDeTransaccion, "alta");
 	strcpy(alta.nombre, nombre.c_str() );
 	strcpy(alta.direccion, direccion.c_str() );
 	strcpy(alta.telefono, telefono.c_str() );
@@ -42,7 +39,7 @@ mensaje Cliente::enviarAlta (const int id,const std::string& nombre,const std::s
 	this->cola->escribir ( alta );
 
 	mensaje respuesta;
-	this->cola->leer ( RESPUESTA,&respuesta );
+	this->cola->leer ( &respuesta );
 
 	return respuesta;
 }

@@ -16,7 +16,7 @@ Servidor :: ~Servidor () {
 
 int Servidor :: recibirPeticion () {
 	mensaje peticionRecibida;
-	this->cola->leer(PETICION, &peticionRecibida);
+	this->cola->leer(&peticionRecibida);
 	this->m_ultimaOperacion = peticionRecibida.mtype;
 
 	switch (peticionRecibida.mtype) {
@@ -80,7 +80,7 @@ int Servidor::guardar(mensaje regAlta) {
 
 int Servidor::consultar(int id) {
 	if (id > 0 && id <= this->m_cache.size()) {
-		this->m_resultadoConsulta = this->m_cache[id];
+		this->m_resultadoConsulta = this->m_cache[id-1];
 		return 0;
 	}
 
