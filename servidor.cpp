@@ -2,19 +2,24 @@
 #include <system_error>
 
 #include "Servidor.h"
+#include "ExitHandler.h"
+#include "SignalHandler.h"
 
 
 int main(int argc, char* argv[]) {
     try {
         std::cout << "== Gestor de base de Datos - Servidor  ==" << std::endl;
+        std::cout << "Ctrl-C para salir\n" << std::endl;
 
 	// Creo servidor
 	Servidor servidor("/bin/cat", 'a');
-	bool keepGoing = true;
 
-	while (keepGoing) {
-		// TODO: Salir/cerrar el servidor
+	// Controla cuando llega la señal para salir
+	utils::ExitHandler exitHandler;
+	utils::SignalHandler sigHandler = utils::SignalHandler::getInstance();
+	sigHandler.registrarHandler(utils::ExitHandler::SIG_EXIT, exitHandler);
 
+	while (!exitHandler.exitRecibido) {
 		// Lee de la cola y queda a la espera de que haya datos.
 		std::cout << "Esperando... ";
 		servidor.recibirPeticion();
@@ -28,6 +33,10 @@ int main(int argc, char* argv[]) {
 		servidor.responderPeticion();
 		std::cout << "enviado." << std::endl;
 	}
+
+	// Destriye el manejador de señales
+	sigHandler.removerHandler(utils::ExitHandler::SIG_EXIT);
+	utils::SignalHandler::destruir();
 
         std::cout << "== Servidor apagado  ==" << std::endl;
 

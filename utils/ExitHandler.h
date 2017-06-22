@@ -10,14 +10,14 @@ namespace utils {
 			static const int SIG_EXIT = SIGINT;
 
 
-			bool exitRecivido;
+			bool exitRecibido;
 			
 			
 			ExitHandler() : exitRecivido(false) { }
 
 
 			virtual int handleSignal(int signum) {
-				this->exitRecivido = true;
+				this->exitRecibido = true;
 				return 0;
 			}
 	};
