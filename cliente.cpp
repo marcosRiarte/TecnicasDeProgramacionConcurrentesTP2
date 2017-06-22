@@ -21,31 +21,21 @@ int main(int argc, char* argv[]) {
 		std::cout << "Q - Salir" << std::endl;
 		std::cout << std::endl;
 
-		std::cout << "Seleccione la operación: ";
 		char op;
+		std::cout << "Seleccione la operación: ";
 		std::cin >> op;
 
-		switch (op) {
-			case 'A':
-				std::cout << "Se envia un alta al servidor" << std::endl;
-				mensaje alta = cliente.enviarAlta(1, "Marcos Riarte", "Paseo Colon 850", "1126329053");
-				std::cout << "Respuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
-				break;
+		if (op == 'A') {
+			std::cout << "Se envia un alta al servidor" << std::endl;
+			mensaje alta = cliente.enviarAlta(1, "Marcos Riarte", "Paseo Colon 850", "1126329053");
+			std::cout << "Respuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
 
-			case 'B':
-				std::cout << "Work in progress" << std::endl;
-				break;
+		} else if (op == 'B' || op == 'C') {
+			std::cout << "Work in progress" << std::endl;
 
-			case 'C':
-				std::cout << "Work in progress" << std::endl;
-				break;
-
-			case 'Q':
-				keepGoing = false;
-				break;
-
+		} else if (op == 'Q') {
+			keepGoing = false;
 		}
-
 	}
 
 	std::cout << "\n== Cliente cerrado ==" << std::endl;
