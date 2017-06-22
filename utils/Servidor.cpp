@@ -1,7 +1,7 @@
 #include "Servidor.h"
 
 
-Servidor :: Servidor ( const std::string& archivo,const char letra ) : m_ultimaOperacion(0) {
+Servidor :: Servidor ( const std::string& archivo,const char letra ) : m_destinatario(0), m_ultimaOperacion(0) {
 	this->cola = new Cola<mensaje> ( archivo,letra );
 	this->m_db.open("almacen.txt", std::ios::trunc | std::ios::in | std::ios::out);
 }
@@ -16,10 +16,15 @@ Servidor :: ~Servidor () {
 
 int Servidor :: recibirPeticion () {
 	mensaje peticionRecibida;
-	this->cola->leer(&peticionRecibida);
-	this->m_ultimaOperacion = peticionRecibida.mtype;
+	peticionRecibida.tipo_operacion = -1;
 
-	switch (peticionRecibida.mtype) {
+	this->cola->leer(1, &peticionRecibida);
+
+	this->m_destinatario = peticionRecibida.remitente;
+	this->m_ultimaOperacion = peticionRecibida.tipo_operacion;
+//	std::cout << "Llego un: " << this->m_ultimaOperacion << " de " << this->m_destinatario << std::endl;
+
+	switch (peticionRecibida.tipo_operacion) {
 		case ALTA:
 			return guardar(peticionRecibida);
 
@@ -37,6 +42,7 @@ int Servidor :: recibirPeticion () {
 
 int Servidor :: responderPeticion() {
 	std::string textoRta = "";
+//	std::cout << "Devuelvo un: " << this->m_ultimaOperacion << " de " << this->m_destinatario << std::endl;
 	switch (this->m_ultimaOperacion) {
 		case ALTA:
 			textoRta = "[ Registro guardado con ID: " 
@@ -53,8 +59,10 @@ int Servidor :: responderPeticion() {
 	}
 
 	mensaje respuesta;
-	respuesta.mtype = RESPUESTA;
 	respuesta.id = 0;
+	respuesta.mtype = this->m_destinatario;
+	respuesta.remitente = 1;
+	respuesta.tipo_operacion = RESPUESTA;
 	strcpy(respuesta.estadoDeTransaccion, textoRta.c_str());
 
 	this->cola->escribir(respuesta);
@@ -78,8 +86,8 @@ int Servidor::guardar(mensaje regAlta) {
 }
 
 
-int Servidor::consultar(int id) {
-	if (id > 0 && id <= this->m_cache.size()) {
+int Servidor::consultar(unsigned id) {
+	if (id <= this->m_cache.size()) {
 		this->m_resultadoConsulta = this->m_cache[id-1];
 		return 0;
 	}

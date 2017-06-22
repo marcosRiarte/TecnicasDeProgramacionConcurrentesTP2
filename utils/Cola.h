@@ -20,7 +20,7 @@ template <class T> class Cola {
 		virtual ~Cola() = default;
 
 		int escribir ( const T& dato ) const;
-		int leer ( T* buffer ) const;
+		int leer (int idPropio, T* buffer ) const;
 		int destruir () const;
 };
 
@@ -50,8 +50,8 @@ template <class T> int Cola<T> :: escribir ( const T& dato ) const {
 }
 
 //Lee en cola:Devuelve la cantidad de byte copiados en el buffer sin contar el long inicial
-template <class T> int Cola<T> :: leer (T* buffer ) const {
-	int resultado = msgrcv ( this->id,static_cast<void *>(buffer),sizeof(T)-sizeof(long),0,0 );
+template <class T> int Cola<T> :: leer (int idPropio, T* buffer ) const {
+	int resultado = msgrcv ( this->id,static_cast<void *>(buffer),sizeof(T)-sizeof(long), idPropio, 0 );
 	utils::checkErrorWithInteruption(resultado, "No se pudo leer de la cola");
 	return resultado;
 }

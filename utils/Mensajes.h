@@ -12,7 +12,10 @@
 
 
 typedef struct mensaje {
-	long mtype;
+	long mtype;	// Destinatario del mensaje
+
+	int remitente;
+	int tipo_operacion;
 
 	int id;
 	char estadoDeTransaccion[TRANSACCION_SIZE];

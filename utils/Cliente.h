@@ -1,8 +1,10 @@
 #ifndef CLIENTE_H_
 #define CLIENTE_H_
 
-#include <string>
+#include <unistd.h>
 #include <string.h>
+
+#include <string>
 
 #include "Mensajes.h"
 #include "Cola.h"
@@ -10,6 +12,7 @@
 class Cliente {
 
 	private:
+		int m_clienteID;
 		Cola<mensaje>* cola;
 
 	public:
