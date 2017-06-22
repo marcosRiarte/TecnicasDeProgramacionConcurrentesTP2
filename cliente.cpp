@@ -21,13 +21,26 @@ int main(int argc, char* argv[]) {
 		std::cout << "Q - Salir" << std::endl;
 		std::cout << std::endl;
 
+
+		int id;
+		char nombre[61];char direccion [120];char telefono [13];
 		char op;
 		std::cout << "Seleccione la operación: ";
 		std::cin >> op;
 
 		if (op == 'A') {
 			std::cout << "Se envia un alta al servidor" << std::endl;
-			mensaje alta = cliente.enviarAlta(1, "Marcos Riarte", "Paseo Colon 850", "1126329053");
+			std::cout << "Ingrese registro nuevo de la tabla persnona" << std::endl;
+			std::cout << "ID : ";
+			std::cin >> id;
+			std::cout << "nombre : ";
+			std::cin >> nombre;
+			std::cout << "direccion : ";
+			std::cin >> direccion;
+			std::cout << "telefono : ";
+			std::cin >> telefono;
+
+			mensaje alta = cliente.enviarAlta(id,nombre,direccion, telefono);
 			std::cout << "Respuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
 
 		} else if (op == 'B' || op == 'C') {
