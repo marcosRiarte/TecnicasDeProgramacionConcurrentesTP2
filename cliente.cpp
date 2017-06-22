@@ -17,32 +17,46 @@ int main(int argc, char* argv[]) {
 	while (keepGoing) {
 		std::cout << "A - Alta" << std::endl;
 		std::cout << "B - Baja (WIP)" << std::endl;
-		std::cout << "C - Consulta (WIP)" << std::endl;
+		std::cout << "C - Consulta" << std::endl;
 		std::cout << "Q - Salir" << std::endl;
 		std::cout << std::endl;
 
-		char nombre[61];char direccion [120];char telefono [13];
 		char op;
 		std::cout << "Seleccione la operación: ";
 		std::cin >> op;
 
 		if (op == 'A') {
-			std::cout << "\nIngrese datos de una nueva persnona: " << std::endl;
+			std::cout << "\nIngrese datos de una nueva persona: " << std::endl;
+
+			std::string nombre;
 			std::cout << "Nombre: ";
 			std::cin >> nombre;
 
+			std::string direccion;
 			std::cout << "Direccion: ";
 			std::cin >> direccion;
 
+			std::string telefono;
 			std::cout << "Telefono: ";
 			std::cin >> telefono;
 
-			mensaje alta = cliente.enviarAlta(0, nombre, direccion, telefono);
-			std::cout << "Respuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
+			mensaje alta = cliente.enviarAlta(nombre, direccion, telefono);
+			std::cout << "\nRespuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
 			std::cout << "\n\n" << std::endl;
 
-		} else if (op == 'B' || op == 'C') {
+		} else if (op == 'B') {
 			std::cout << "Work in progress" << std::endl;
+
+		} else if (op == 'C') {
+			std::cout << "\nIngrese el id de la persona a consultar: " << std::endl;
+
+			int id;
+			std::cout << "ID: ";
+			std::cin >> id;
+
+			mensaje respuesta = cliente.enviarPeticion(id);
+			std::cout << "\nDatos recibidos:\n\t" << respuesta.estadoDeTransaccion << std::endl;
+			std::cout << "\n\n" << std::endl;
 
 		} else if (op == 'Q') {
 			keepGoing = false;
