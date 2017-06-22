@@ -13,6 +13,8 @@ int main(int argc, char* argv[]) {
 	bool keepGoing = true;
 
 	while (keepGoing) {
+		// TODO: Salir/cerrar el servidor
+
 		// Lee de la cola y queda a la espera de que haya datos.
 		std::cout << "Esperando... ";
 		servidor.recibirPeticion();
