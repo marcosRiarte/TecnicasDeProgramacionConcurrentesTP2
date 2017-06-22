@@ -45,14 +45,14 @@ template <class T> int Cola<T> :: destruir () const {
 //Escribe en la cola con el id un mesaje y dvuelve 0 si se produjo con exito
 template <class T> int Cola<T> :: escribir ( const T& dato ) const {
 	int resultado = msgsnd ( this->id,static_cast<const void*>(&dato),sizeof(T)-sizeof(long),0 );
-	utils::checkError(resultado, "No se pudo escribir  en la cola");
+	utils::checkErrorWithInteruption(resultado, "No se pudo escribir  en la cola");
 	return resultado;
 }
 
 //Lee en cola:Devuelve la cantidad de byte copiados en el buffer sin contar el long inicial
 template <class T> int Cola<T> :: leer ( const int tipo,T* buffer ) const {
 	int resultado = msgrcv ( this->id,static_cast<void *>(buffer),sizeof(T)-sizeof(long),tipo,0 );
-	utils::checkError(resultado, "No se pudo leer de la cola");
+	utils::checkErrorWithInteruption(resultado, "No se pudo leer de la cola");
 	return resultado;
 }
 
