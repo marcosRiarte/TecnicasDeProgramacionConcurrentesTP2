@@ -1,12 +1,12 @@
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #include <iostream>
 #include <system_error>
-# include <sstream>
-# include <unistd.h>
-# include "Servidor.h"
-# include <stdlib.h>
-# include  <sys/wait.h>
-# include "Cliente.h"
-# include "Mensajes.h"
+#include <sstream>
+#include "Servidor.h"
+#include "Cliente.h"
+#include "Mensajes.h"
 
 int main(int argc, char* argv[]) {
     try {
