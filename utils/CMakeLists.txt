@@ -6,6 +6,7 @@ set ( SRCS
 	Mensajes.h
 	Cola.h
 	Servidor.cpp
+	SignalHandler.cpp
     )
 
 #Compila la libreria
