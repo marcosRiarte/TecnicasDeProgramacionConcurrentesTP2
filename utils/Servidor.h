@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include <string>
-#include <sstream>
 #include <fstream>
 #include <vector>
 
@@ -20,10 +19,8 @@ class Servidor {
 		std::fstream m_db;
 		std::vector<std::string> m_cache;
 
-		void crearArchivoAlmacenamiento (std::string fileName);
-
 	public:
-		Servidor ( const std::string& archivo,const char letra );
+		Servidor ( const std::string& archivo, const char letra );
 		~Servidor ();
 
 		// Lee de la cola y escribe en la "DB", devuelde el id del registro
