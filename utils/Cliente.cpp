@@ -28,7 +28,7 @@ mensaje Cliente :: enviarPeticion ( const int id,const std::string& texto ) cons
 
 mensaje Cliente::enviarAlta (const int id,const std::string& nombre,const std::string& direccion,const std::string& telefono ) const {
 	mensaje alta;
-	alta.mtype = PETICION;
+	alta.mtype = ALTA;
 	alta.id = id;
 
 	//Copia el texto en la transaccion(mensaje)

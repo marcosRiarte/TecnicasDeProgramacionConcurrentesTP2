@@ -19,6 +19,12 @@ class Servidor {
 		std::fstream m_db;
 		std::vector<std::string> m_cache;
 
+		int m_ultimaOperacion;
+		std::string m_resultadoConsulta;
+
+		int guardar(mensaje reg);
+		int consultar(int id);
+
 	public:
 		Servidor ( const std::string& archivo, const char letra );
 		~Servidor ();
