@@ -1,76 +1,59 @@
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <unistd.h>
 #include <iostream>
 #include <system_error>
 #include <sstream>
-#include "Servidor.h"
+#include <string>
+
 #include "Cliente.h"
 #include "Mensajes.h"
 
+
 int main(int argc, char* argv[]) {
     try {
-        std::cout << "== Gestor de base de Datos  ==" << std::endl;
-        int cantDeClientes = (argc > 1) ? atoi(argv[1]) : 2;
+	std::cout << "== Gestor de base de Datos - cliente  ==\n" << std::endl;
 
-        static const int NROPROCESSREQUEST = 3;
-        std::cout << "Cantidad de clientes: " << cantDeClientes << std::endl;
-        int processId = fork();
+	Cliente cliente("/bin/cat", 'a');
+	bool keepGoing = true;
 
-        if (processId == 0) {  //Hijo
-            //Creo servidor
+	while (keepGoing) {
+		std::cout << "A - Alta" << std::endl;
+		std::cout << "B - Baja (WIP)" << std::endl;
+		std::cout << "C - Consulta (WIP)" << std::endl;
+		std::cout << "Q - Salir" << std::endl;
+		std::cout << std::endl;
 
-            Servidor servidor("/bin/cat", 'a');
-            std::cout << "\n Se creo el proceso SERVIDOR con ProcessId : " << getpid() <<std::endl;
-            for (int i = 0; i < NROPROCESSREQUEST; i++) {
-                std::cout << "\n Servidor : esperando peticiones " << std::endl;
-                //Lee de la cola y queda a la espera de que haya datos.
-                servidor.recibirPeticion();
+		std::cout << "Seleccione la operación: ";
+		char op;
+		std::cin >> op;
 
-                //Devolvera el mensaje enviado por el cliente
-                std::cout << "\n Servidor : peticion recibida : " << servidor.getPeticionRecibida().estadoDeTransaccion
-                          << std::endl;
-                //Prepara la respuesta
-                servidor.procesarPeticion();
-                //Escribre la respuesta en el mensaje
-                std::cout << " Servidor : peticion procesada - enviando respuesta : "
-                          << servidor.getRespuesta().estadoDeTransaccion << std::endl;
-                //Escribe en la cola en mensaje de respuesta.
-                servidor.responderPeticion();
-                std::cout << " Servidor : respuesta enviada " << std::endl;
-            }
+		switch (op) {
+			case 'A':
+				std::cout << "Se envia un alta al servidor" << std::endl;
+				mensaje alta = cliente.enviarAlta(1, "Marcos Riarte", "Paseo Colon 850", "1126329053");
+				std::cout << "Respuesta recibida: ID = " << alta.id << " - " << alta.estadoDeTransaccion << std::endl;
+				break;
 
-        return 0;
-    } else {
-             // cliente
-             Cliente cliente("/bin/cat", 'a');
-             std::cout << "\n Se creo el proceso CLIENTE con ProcessId : " << getpid() <<std::endl;
+			case 'B':
+				std::cout << "Work in progress" << std::endl;
+				break;
 
-             for (int i = 0; i < NROPROCESSREQUEST; i++) {
-             std::cin.get();
+			case 'C':
+				std::cout << "Work in progress" << std::endl;
+				break;
 
-             // se arma el texto del mensaje
-             std::stringstream peticion;
-             peticion << " Peticion " << (i + 1) << " del cliente ";
+			case 'Q':
+				keepGoing = false;
+				break;
 
-             // se envia el mensaje al servidor (escribe en la cola) y recibe el mensaje de respuesta (lee cola)
-             //mensaje rta = cliente.enviarPeticion(i + 1, peticion.str());
-             //std::cout << " Cliente : respuesta recibida = ( ID = " << rta.id << " ) - " << rta.estadoDeTransaccion << std::endl;
-             //-----Alta
-             std::cout << " Alta numero " << (i + 1) << " del cliente "<< getpid() << std::endl;
-             mensaje alta = cliente.enviarAlta(i + 1,"Marcos Riarte","Paseo Colon 850","1126329053");
-             std::cout << " Cliente : respuesta de alta recibida = ( ID = " << alta.id << " ) - " << alta.estadoDeTransaccion << std::endl;
-             }//Fin for
-             wait(NULL);
+		}
 
-            std::cout << "\n== Fin de las transacciones ==" << std::endl;
-             return 0;
-           }
+	}
 
-    }//Fin try
-    catch (const std::system_error &e) {
+	std::cout << "\n== Cliente cerrado ==" << std::endl;
+
+	return 0;
+
+    } catch (const std::system_error &e) {
         std::cout << "*\n** Error: " << e.code() << " -> " << e.what() << std::endl;
-        return -1;
-        }
-
-}//Fin del main()
+        return 1;
+    }
+}
