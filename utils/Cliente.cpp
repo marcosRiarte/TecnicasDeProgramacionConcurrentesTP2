@@ -14,7 +14,7 @@ Cliente :: ~Cliente() {
 mensaje Cliente :: enviarPeticion(const int id) {
 	mensaje peticion;
 	peticion.id = id;
-	peticion.mtype = 1;
+	peticion.mtype = SERVER_ID;
 	peticion.tipo_operacion = PETICION;
 	peticion.remitente = this->m_clienteID;
 
@@ -29,7 +29,7 @@ mensaje Cliente :: enviarPeticion(const int id) {
 mensaje Cliente::enviarAlta(std::string nombre, std::string direccion, std::string telefono ) {
 	mensaje alta;
 	alta.id = 0;
-	alta.mtype = 1;
+	alta.mtype = SERVER_ID;
 	alta.remitente = this->m_clienteID;
 	alta.tipo_operacion = ALTA;
 
@@ -41,8 +41,6 @@ mensaje Cliente::enviarAlta(std::string nombre, std::string direccion, std::stri
 
 	//Escribe en cola
 	this->cola->escribir ( alta );
-
-//	sleep(10);
 
 	mensaje respuesta;
 	this->cola->leer (this->m_clienteID,  &respuesta );
