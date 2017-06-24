@@ -22,7 +22,6 @@ int Servidor :: recibirPeticion () {
 
 	this->m_destinatario = peticionRecibida.remitente;
 	this->m_ultimaOperacion = peticionRecibida.tipo_operacion;
-//	std::cout << "Llego un: " << this->m_ultimaOperacion << " de " << this->m_destinatario << std::endl;
 
 	switch (peticionRecibida.tipo_operacion) {
 		case ALTA:
@@ -42,7 +41,6 @@ int Servidor :: recibirPeticion () {
 
 int Servidor :: responderPeticion() {
 	std::string textoRta = "";
-//	std::cout << "Devuelvo un: " << this->m_ultimaOperacion << " de " << this->m_destinatario << std::endl;
 	switch (this->m_ultimaOperacion) {
 		case ALTA:
 			textoRta = "[ Registro guardado con ID: " 

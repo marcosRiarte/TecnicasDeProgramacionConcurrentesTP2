@@ -1,20 +1,20 @@
 #ifndef MENSAJES_H_
 #define MENSAJES_H_
 
-#define	PETICION	 1
-#define	RESPUESTA	 2
-#define ALTA         3
-#define MODIFICACION 4
-#define TRANSACCION_SIZE 20
-#define NOMBRE_SIZE	61
-#define DIRECCION_SIZE 120
-#define TELEFONO_SIZE 13
+static const int PETICION = 1;
+static const int RESPUESTA = 2;
+static const int ALTA = 3;
+
+static const int NOMBRE_SIZE = 32;
+static const int TELEFONO_SIZE = 32;
+static const int DIRECCION_SIZE = 32;
+static const int TRANSACCION_SIZE = 128;
 
 
 typedef struct mensaje {
 	long mtype;	// Destinatario del mensaje
+	long remitente;	// Del mensaje
 
-	int remitente;
 	int tipo_operacion;
 
 	int id;
