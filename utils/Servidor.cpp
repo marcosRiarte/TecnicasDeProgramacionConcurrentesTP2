@@ -1,16 +1,34 @@
 #include "Servidor.h"
 
 
-Servidor :: Servidor ( const std::string& archivo,const char letra ) : m_destinatario(0), m_ultimaOperacion(0) {
+Servidor::Servidor(const std::string& archivo, const char letra)
+	: m_db("almacen.txt"), m_destinatario(0), m_ultimaOperacion(0)
+{
 	this->cola = new Cola<mensaje> ( archivo,letra );
-	this->m_db.open("almacen.txt", std::ios::trunc | std::ios::in | std::ios::out);
+	initDB("almacen.txt");
 }
 
 
-Servidor :: ~Servidor () {
-	this->cola->destruir ();
+Servidor::~Servidor() {
+	this->cola->destruir();
 	delete this->cola;
+
 	this->m_db.close();
+}
+
+void Servidor::initDB(std::string nomArch) {
+	if (!this->m_db) {
+		// No se pudo abrir el archivo, lo creo vacio
+		this->m_db.open(nomArch, std::ios::trunc | std::ios::in | std::ios::out);
+
+	} else {
+		// Se lee el archivo a memoria
+		std::string line;
+		while (std::getline(this->m_db, line)) {
+			this->m_cache.push_back(line);
+		}
+		this->m_db.clear();
+	}
 }
 
 
@@ -18,7 +36,7 @@ int Servidor :: recibirPeticion () {
 	mensaje peticionRecibida;
 	peticionRecibida.tipo_operacion = -1;
 
-	this->cola->leer(1, &peticionRecibida);
+	this->cola->leer(SERVER_ID, &peticionRecibida);
 
 	this->m_destinatario = peticionRecibida.remitente;
 	this->m_ultimaOperacion = peticionRecibida.tipo_operacion;
@@ -59,7 +77,7 @@ int Servidor :: responderPeticion() {
 	mensaje respuesta;
 	respuesta.id = 0;
 	respuesta.mtype = this->m_destinatario;
-	respuesta.remitente = 1;
+	respuesta.remitente = SERVER_ID;
 	respuesta.tipo_operacion = RESPUESTA;
 	strcpy(respuesta.estadoDeTransaccion, textoRta.c_str());
 

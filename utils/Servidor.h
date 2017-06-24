@@ -25,6 +25,7 @@ class Servidor {
 
 		int guardar(mensaje reg);
 		int consultar(unsigned id);
+		void initDB(std::string nomArch);
 
 	public:
 		Servidor ( const std::string& archivo, const char letra );
