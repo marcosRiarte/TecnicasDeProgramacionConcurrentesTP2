@@ -5,6 +5,8 @@ static const int PETICION = 1;
 static const int RESPUESTA = 2;
 static const int ALTA = 3;
 
+static const int SERVER_ID = 1;
+
 static const int NOMBRE_SIZE = 32;
 static const int TELEFONO_SIZE = 32;
 static const int DIRECCION_SIZE = 32;
