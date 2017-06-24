@@ -7,7 +7,7 @@
 #include "Mensajes.h"
 
 
-int main(int argc, char* argv[]) {
+int main() {
     try {
 	std::cout << "== Gestor de base de Datos - cliente  ==\n" << std::endl;
 

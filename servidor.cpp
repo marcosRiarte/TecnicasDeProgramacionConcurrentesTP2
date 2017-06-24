@@ -6,7 +6,7 @@
 #include "SignalHandler.h"
 
 
-int main(int argc, char* argv[]) {
+int main() {
     try {
         std::cout << "== Gestor de base de Datos - Servidor  ==" << std::endl;
         std::cout << "Ctrl-C para salir\n" << std::endl;

@@ -16,7 +16,7 @@ namespace utils {
 			ExitHandler() : exitRecibido(false) { }
 
 
-			virtual int handleSignal(int signum) {
+			virtual int handleSignal(int) {
 				this->exitRecibido = true;
 				return 0;
 			}
